@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Foot Sense</string>
+    <string name="ble_not_supported">BLE not supported</string>
+    <string name="error_bluetooth_not_supported">Bluetooth not supported</string>
+    <string name="received_value">Received Value: </string>
+    <string name="web_url">http://10.19.40.181:3333/request</string>
+</resources>

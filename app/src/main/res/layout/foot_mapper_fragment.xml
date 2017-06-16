@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <ToggleButton
+        android:id="@+id/load_right"
+        android:textOff="Load Right Foot"
+        android:textOn="Stop Right Foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/right_foot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/right_foot_hor">
+
+        <Button
+            android:id="@+id/right_p1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/right_p2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_above="@+id/right_p1"
+            android:layout_alignStart="@+id/right_p1"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/right_p3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="18dp"
+            android:layout_above="@+id/right_p2"
+            android:layout_toEndOf="@+id/right_p1"
+            android:layout_marginStart="27dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/right_p4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignStart="@+id/right_p3"
+            android:layout_alignTop="@+id/right_p1"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="5dp"/>
+
+        <Button
+            android:id="@+id/right_p5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toEndOf="@+id/right_p2"
+            android:layout_above="@+id/right_p4"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="30dp"/>
+
+        <Button
+            android:id="@+id/right_p6"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/right_p5"
+            android:layout_toEndOf="@+id/right_p3"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginStart="23dp"
+            android:layout_marginBottom="25dp"/>
+
+        <Button
+            android:id="@+id/right_p7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:id="@+id/right_p8"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/right_p7"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="23dp"
+            android:layout_alignParentEnd="true"/>
+
+
+    </RelativeLayout>
+
+    <ToggleButton
+        android:id="@+id/load_left"
+        android:textOff="Load Left Foot"
+        android:textOn="Stop Left Foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/left_foot"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/left_foot_hor">
+
+        <Button
+            android:id="@+id/left_p1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/left_p2"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="36dp"
+            android:layout_marginStart="18dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/left_p3"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="18dp"
+            android:layout_marginStart="49dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="42dp"
+            android:layout_marginStart="80dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignTop="@+id/left_p1"
+            android:layout_alignStart="@+id/left_p3"
+            android:layout_marginStart="11dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toEndOf="@+id/left_p2"
+            android:layout_below="@+id/left_p4"
+            android:layout_marginTop="33dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p6"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/left_p5"
+            android:layout_marginStart="34dp"
+            android:layout_toEndOf="@+id/left_p3"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/rounded_btn_c0"/>
+
+        <Button
+            android:id="@+id/left_p7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_marginEnd="35dp"
+            android:layout_marginTop="62dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
+        <Button
+            android:id="@+id/left_p8"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_btn_c0"
+            android:layout_below="@+id/left_p7"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="34dp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/upload"
+        android:text="Upload Values"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
