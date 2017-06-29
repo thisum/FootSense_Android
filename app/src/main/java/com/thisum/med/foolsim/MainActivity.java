@@ -7,6 +7,8 @@ import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -45,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements ResultsNotifier
     {
         wakeLock.release();
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu )
+    {
+        getMenuInflater().inflate( R.menu.legend, menu );
+        return super.onCreateOptionsMenu( menu );
     }
 
     @Override

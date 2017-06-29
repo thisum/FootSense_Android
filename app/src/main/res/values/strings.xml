@@ -4,4 +4,13 @@
     <string name="error_bluetooth_not_supported">Bluetooth not supported</string>
     <string name="received_value">Received Value: </string>
     <string name="web_url">http://10.19.40.181:3333/request</string>
+    <string name="less_15"><![CDATA[T <= 15]]></string>
+    <string name="less_20"><![CDATA[15 < T <= 20]]></string>
+    <string name="less_24"><![CDATA[20 < T <= 24]]></string>
+    <string name="less_25"><![CDATA[24 < T <= 25]]></string>
+    <string name="less_26"><![CDATA[25 < T <= 26]]></string>
+    <string name="less_27"><![CDATA[26 < T <= 27]]></string>
+    <string name="less_29"><![CDATA[27 < T <= 29]]></string>
+    <string name="greater_29"><![CDATA[29 < T]]></string>
+    <string name="legend">Legend</string>
 </resources>

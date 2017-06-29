@@ -63,7 +63,8 @@ public class BluetoothLeService extends Service
     public final static String ACTION_GATT_SERVICES_DISCOVERED_R = "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED_R";
     public final static String ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE_R";
     public final static String ACTION_GATT_DESCRIPTOR_WRITE = "com.example.bluetooth.le.ACTION_GATT_DESCRIPTOR_WRITE";
-    public final static String EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA";
+    public final static String EXTRA_DATA_LEFT = "com.example.bluetooth.le.EXTRA_DATA_LEFT";
+    public final static String EXTRA_DATA_RIGHT = "com.example.bluetooth.le.EXTRA_DATA_RIGHT";
     public final static String EXTRA_DATA_DEL = "com.example.bluetooth.le.EXTRA_DATA_DEL";
     public final static String EXTRA_BOOLEAN = "com.example.bluetooth.le.EXTRA_BOOLEAN";
     public final static String EXTRA_DEVICE_ADDRESS = "com.example.bluetooth.le.EXTRA_DEVICE_ADDRESS_R";
@@ -155,7 +156,16 @@ public class BluetoothLeService extends Service
             {
                 if( sb.length() == 8 )
                 {
-                    intent.putExtra( EXTRA_DATA, sb.toString() );
+                    intent.putExtra( EXTRA_DATA_RIGHT, sb.toString() );
+                    sendBroadcast( intent );
+                }
+                sb.setLength(0);
+            }
+            else if( val.contains( ":" ) )
+            {
+                if( sb.length() == 8 )
+                {
+                    intent.putExtra( EXTRA_DATA_LEFT, sb.toString() );
                     sendBroadcast( intent );
                 }
                 sb.setLength(0);
@@ -279,7 +289,7 @@ public class BluetoothLeService extends Service
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        mBluetoothGatt = device.connectGatt( this, false, mGattCallback );
+        mBluetoothGatt = device.connectGatt( this, true, mGattCallback );
         Log.d( TAG, "Trying to create a new connection." );
         mBluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;

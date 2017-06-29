@@ -18,6 +18,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,11 +45,6 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
     private List<Integer> leftLegValues = new ArrayList<>();
     private ArrayList<Integer> values = new ArrayList<>();
 
-    private boolean rightFootLoad;
-    private boolean leftFootLoad;
-
-    private ToggleButton rightLoadBtn;
-    private ToggleButton leftLoadBtn;
     private Button uploadBtn;
     private String patientName = "";
     private String patientEmail = "";
@@ -64,12 +61,7 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
         setMarkers( view, rightLeg, rightMarkers );
         setMarkers( view, leftLeg, leftMarkers );
 
-        rightLoadBtn = (ToggleButton ) view.findViewById( R.id.load_right );
-        leftLoadBtn = (ToggleButton )view.findViewById( R.id.load_left );
         uploadBtn = (Button)view.findViewById( R.id.upload );
-
-        rightLoadBtn.setOnClickListener( this );
-        leftLoadBtn.setOnClickListener( this );
         uploadBtn.setOnClickListener( this );
 
         return view;
@@ -82,7 +74,6 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
             leg[i] = (Button ) view.findViewById( markers[i] );
         }
     }
-
 
     @Override
     public void onResume()
@@ -115,32 +106,8 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick( View v )
     {
-        if( v == leftLoadBtn )
+        if( v == uploadBtn )
         {
-            leftFootLoad = leftLoadBtn.isChecked();
-            if(rightFootLoad)
-            {
-                rightLoadBtn.callOnClick();
-            }
-        }
-        else if( v == rightLoadBtn )
-        {
-            rightFootLoad = rightLoadBtn.isChecked();
-            if(leftFootLoad)
-            {
-                leftLoadBtn.callOnClick();
-            }
-        }
-        else if( v == uploadBtn )
-        {
-            if(rightFootLoad)
-            {
-                rightLoadBtn.callOnClick();
-            }
-            if(leftFootLoad)
-            {
-                leftLoadBtn.callOnClick();
-            }
             uploadData();
         }
     }
@@ -161,36 +128,44 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
             if( BluetoothLeService.ACTION_DATA_AVAILABLE.equals( action ) )
             {
                 values.clear();
-                String val = intent.getStringExtra( BluetoothLeService.EXTRA_DATA );
-                for( char c : val.toCharArray() )
-                {
-                    values.add( Character.getNumericValue( c ) );
-                }
-                onBLEDataReceived( values );
-                if( rightFootLoad )
-                {
-                    rightLegValues.clear();
-                    rightLegValues.addAll( values );
-                }
-                else if( leftFootLoad )
-                {
-                    leftLegValues.clear();
-                    leftLegValues.addAll( values );
-                }
+                String rightVal = intent.getStringExtra( BluetoothLeService.EXTRA_DATA_RIGHT );
+                String leftVal = intent.getStringExtra( BluetoothLeService.EXTRA_DATA_LEFT );
+
+                boolean rightLeg = rightVal != null;
+                extractAndShowValues( (rightLeg ? rightVal : leftVal ), rightLeg );
             }
         }
     };
 
-    private void onBLEDataReceived( ArrayList<Integer> data )
+    private void extractAndShowValues( String tempValues, boolean isRightLeg )
+    {
+        for( char c : tempValues.toCharArray() )
+        {
+            values.add( Character.getNumericValue( c ) );
+        }
+        onBLEDataReceived( values, isRightLeg );
+        if( isRightLeg )
+        {
+            rightLegValues.clear();
+            rightLegValues.addAll( values );
+        }
+        else
+        {
+            leftLegValues.clear();
+            leftLegValues.addAll( values );
+        }
+    }
+
+    private void onBLEDataReceived( ArrayList<Integer> data, boolean isRightLeg )
     {
         for( int i = 0; i < data.size(); i++ )
         {
             int colour = getColour( data.get( i ) );
-            if( rightFootLoad )
+            if( isRightLeg )
             {
                 setMarkerColour( rightLeg[i], colour );
             }
-            else if( leftFootLoad )
+            else
             {
                 setMarkerColour( leftLeg[i], colour );
             }

@@ -3,10 +3,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-    <ToggleButton
-        android:id="@+id/load_right"
-        android:textOff="Load Right Foot"
-        android:textOn="Stop Right Foot"
+    <TextView
+        android:text="Right Leg"
+        android:layout_marginLeft="5dp"
+        android:height="45dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -103,10 +103,10 @@
 
     </RelativeLayout>
 
-    <ToggleButton
-        android:id="@+id/load_left"
-        android:textOff="Load Left Foot"
-        android:textOn="Stop Left Foot"
+    <TextView
+        android:text="Left Leg"
+        android:height="45dp"
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

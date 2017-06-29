@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" >
+
+    <item
+          android:title="@string/legend"
+          android:orderInCategory="100"
+          app:showAsAction="always" >
+
+        <menu>
+
+            <item
+                android:icon="@drawable/rounded_btn_c0"
+                android:title="@string/less_15"
+                android:orderInCategory="100"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c1"
+                android:title="@string/less_20"
+                android:orderInCategory="101"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c2"
+                android:title="@string/less_24"
+                android:orderInCategory="102"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c3"
+                android:title="@string/less_25"
+                android:orderInCategory="103"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c4"
+                android:title="@string/less_26"
+                android:orderInCategory="104"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c5"
+                android:title="@string/less_27"
+                android:orderInCategory="105"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c6"
+                android:title="@string/less_29"
+                android:orderInCategory="106"
+                app:showAsAction="never" />
+
+            <item
+                android:icon="@drawable/rounded_btn_c7"
+                android:title="@string/greater_29"
+                android:orderInCategory="107"
+                app:showAsAction="never" />
+
+        </menu>
+
+        </item>
+
+</menu>
