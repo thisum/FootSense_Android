@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,9 +29,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.lang.reflect.Field;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by thisum on 4/19/2017.
@@ -38,6 +43,7 @@ import java.util.List;
 public class FootMapperFragment extends Fragment implements View.OnClickListener, ResultsNotifier
 {
     private static final String TAG = FootMapperFragment.class.getSimpleName();
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     private Button[] rightLeg = new Button[8];
     private Button[] leftLeg = new Button[8];
@@ -48,11 +54,13 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
     private Button uploadBtn;
     private String patientName = "";
     private String patientEmail = "";
+    private MenuItem diffMenuItem = null;
 
     @Nullable
     @Override
     public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState )
     {
+        setHasOptionsMenu( true );
         View view = inflater.inflate( R.layout.foot_mapper_fragment, container, false );
 
         Integer[] rightMarkers = {R.id.right_p1, R.id.right_p2, R.id.right_p3, R.id.right_p4, R.id.right_p5, R.id.right_p6, R.id.right_p7, R.id.right_p8};
@@ -63,6 +71,8 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
 
         uploadBtn = (Button)view.findViewById( R.id.upload );
         uploadBtn.setOnClickListener( this );
+
+        df.setRoundingMode( RoundingMode.CEILING);
 
         return view;
     }
@@ -99,8 +109,15 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
     @Override
     public void onPause()
     {
+        diffMenuItem = null;
         getActivity().unregisterReceiver( receiver );
         super.onPause();
+    }
+
+    @Override
+    public void onCreateOptionsMenu( Menu menu, MenuInflater inflater )
+    {
+        diffMenuItem = menu.findItem( R.id.diff_indicator );
     }
 
     @Override
@@ -128,8 +145,8 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
             if( BluetoothLeService.ACTION_DATA_AVAILABLE.equals( action ) )
             {
                 values.clear();
-                String rightVal = intent.getStringExtra( BluetoothLeService.EXTRA_DATA_RIGHT );
-                String leftVal = intent.getStringExtra( BluetoothLeService.EXTRA_DATA_LEFT );
+                ArrayList<Integer> rightVal = intent.getIntegerArrayListExtra( BluetoothLeService.EXTRA_DATA_RIGHT );
+                ArrayList<Integer> leftVal = intent.getIntegerArrayListExtra( BluetoothLeService.EXTRA_DATA_LEFT );
 
                 boolean rightLeg = rightVal != null;
                 extractAndShowValues( (rightLeg ? rightVal : leftVal ), rightLeg );
@@ -137,12 +154,9 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
         }
     };
 
-    private void extractAndShowValues( String tempValues, boolean isRightLeg )
+    private void extractAndShowValues( ArrayList<Integer> tempValues, boolean isRightLeg )
     {
-        for( char c : tempValues.toCharArray() )
-        {
-            values.add( Character.getNumericValue( c ) );
-        }
+        values.addAll( tempValues );
         onBLEDataReceived( values, isRightLeg );
         if( isRightLeg )
         {
@@ -154,24 +168,42 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
             leftLegValues.clear();
             leftLegValues.addAll( values );
         }
+
+        diffMenuItem.setIcon( getResources().getDrawable( ( hasDifferences() ? R.drawable.indicator_diff_yes : R.drawable.indicator_diff_no) , null ) );
     }
 
-    private void onBLEDataReceived( ArrayList<Integer> data, boolean isRightLeg )
+    private void onBLEDataReceived( ArrayList<Integer> temperatureList, boolean isRightLeg )
     {
-        for( int i = 0; i < data.size(); i++ )
+        for( int i = 0; i < temperatureList.size(); i++ )
         {
-            int colour = getColour( data.get( i ) );
+            double temp = temperatureList.get( i ) / 100;
+            int colour = getColour( temp );
+            String tempVal = String.valueOf( temp );
             if( isRightLeg )
             {
-                setMarkerColour( rightLeg[i], colour );
+                setMarkerColour( rightLeg[i], colour, tempVal );
             }
             else
             {
-                setMarkerColour( leftLeg[i], colour );
+                setMarkerColour( leftLeg[i], colour, tempVal );
             }
         }
     }
 
+    private boolean hasDifferences()
+    {
+        if( ! leftLegValues.isEmpty() && ! rightLegValues.isEmpty() )
+        {
+            for( int i = 0; i < leftLegValues.size(); i++ )
+            {
+                if( Math.abs( leftLegValues.get( i ).intValue() - rightLegValues.get( i ).intValue() ) >= 2 )
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private IntentFilter makeGattUpdateIntentFilter()
     {
@@ -196,23 +228,43 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
         }
     };
 
-    private int getColour( int temp )
+    private int getColour( double temperature )
     {
-        switch( temp )
+        if( temperature <= 15 )
         {
-            case 1: return R.drawable.rounded_btn_c0;
-            case 2: return R.drawable.rounded_btn_c1;
-            case 3: return R.drawable.rounded_btn_c2;
-            case 4: return R.drawable.rounded_btn_c3;
-            case 5: return R.drawable.rounded_btn_c4;
-            case 6: return R.drawable.rounded_btn_c5;
-            case 7: return R.drawable.rounded_btn_c6;
-            case 8: return R.drawable.rounded_btn_c7;
-            default: return R.drawable.rounded_btn_c0;
+            return R.drawable.rounded_btn_c0;
+        }
+        else if( 15 < temperature && temperature <= 20 )
+        {
+            return R.drawable.rounded_btn_c1;
+        }
+        else if( 20 < temperature && temperature <= 24 )
+        {
+            return R.drawable.rounded_btn_c2;
+        }
+        else if( 24 < temperature && temperature <= 25 )
+        {
+            return R.drawable.rounded_btn_c3;
+        }
+        else if( 25 < temperature && temperature <= 26 )
+        {
+            return R.drawable.rounded_btn_c4;
+        }
+        else if( 26 < temperature && temperature <= 27 )
+        {
+            return R.drawable.rounded_btn_c5;
+        }
+        else if( 27 < temperature && temperature <= 29 )
+        {
+            return R.drawable.rounded_btn_c6;
+        }
+        else
+        {
+            return R.drawable.rounded_btn_c7;
         }
     }
 
-    private void setMarkerColour( final Button button, final int colour )
+    private void setMarkerColour( final Button button, final int colour, final String tempVal )
     {
         getActivity().runOnUiThread( new Runnable()
         {
@@ -220,6 +272,7 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
             public void run()
             {
                 button.setBackground( getResources().getDrawable( colour, null ) );
+                button.setText( tempVal );
             }
         } );
     }

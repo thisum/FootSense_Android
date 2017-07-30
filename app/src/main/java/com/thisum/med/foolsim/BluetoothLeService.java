@@ -75,6 +75,7 @@ public class BluetoothLeService extends Service
     public final static UUID RIGHT_MEASUREMENT = UUID.fromString( HEART_RATE_MEASUREMENT_RIGHT );
 
     private StringBuilder sb = new StringBuilder();
+    private ArrayList<Integer> temperatureList = new ArrayList<>(  );
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -154,30 +155,30 @@ public class BluetoothLeService extends Service
 
             if( val.contains( ";" ) )
             {
-                if( sb.length() == 8 )
+                if( temperatureList.size() == 8 )
                 {
-                    intent.putExtra( EXTRA_DATA_RIGHT, sb.toString() );
+                    intent.putIntegerArrayListExtra( EXTRA_DATA_RIGHT, temperatureList );
                     sendBroadcast( intent );
                 }
-                sb.setLength(0);
+                temperatureList.clear();
             }
             else if( val.contains( ":" ) )
             {
-                if( sb.length() == 8 )
+                if( temperatureList.size() == 8 )
                 {
-                    intent.putExtra( EXTRA_DATA_LEFT, sb.toString() );
+                    intent.putIntegerArrayListExtra( EXTRA_DATA_LEFT, temperatureList );
                     sendBroadcast( intent );
                 }
-                sb.setLength(0);
+                temperatureList.clear();
             }
             else if( val.length() > 3 )
             {
-                sb.append( String.valueOf( Integer.parseInt( val.substring( 3 ), 16 ) ) );
+                temperatureList.add( Integer.parseInt( val.substring( 3 ), 16 ) );
             }
             else if( ( flag & 0x01 ) == 0 )
             {
                 int heartRate = characteristic.getIntValue( BluetoothGattCharacteristic.FORMAT_UINT8, 1 );
-                sb.append( String.valueOf( heartRate ) );
+                temperatureList.add( heartRate );
             }
         }
         catch( Exception e )

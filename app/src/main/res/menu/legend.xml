@@ -5,6 +5,13 @@
     tools:context=".MainActivity" >
 
     <item
+          android:id="@+id/diff_indicator"
+          android:title=""
+          android:icon="@drawable/indicator_diff_no"
+          android:orderInCategory="99"
+          app:showAsAction="always" />
+
+    <item
           android:title="@string/legend"
           android:orderInCategory="100"
           app:showAsAction="always" >
