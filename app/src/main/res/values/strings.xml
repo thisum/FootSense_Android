@@ -3,7 +3,7 @@
     <string name="ble_not_supported">BLE not supported</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported</string>
     <string name="received_value">Received Value: </string>
-    <string name="web_url">http://10.19.40.181:3333/request</string>
+    <string name="web_url">http://52.77.247.133:4500/request</string>
     <string name="less_15"><![CDATA[T <= 15]]></string>
     <string name="less_20"><![CDATA[15 < T <= 20]]></string>
     <string name="less_24"><![CDATA[20 < T <= 24]]></string>
