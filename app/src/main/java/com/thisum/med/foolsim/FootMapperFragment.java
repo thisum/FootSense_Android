@@ -63,7 +63,7 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
         setHasOptionsMenu( true );
         View view = inflater.inflate( R.layout.foot_mapper_fragment, container, false );
 
-        Integer[] rightMarkers = {R.id.right_p1, R.id.right_p2, R.id.right_p3, R.id.right_p4, R.id.right_p5, R.id.right_p6, R.id.right_p7, R.id.right_p8};
+        Integer[] rightMarkers = {R.id.right_p8, R.id.right_p2, R.id.right_p3, R.id.right_p4, R.id.right_p5, R.id.right_p6, R.id.right_p7, R.id.right_p1};
         Integer[] leftMarkers = {R.id.left_p1, R.id.left_p2, R.id.left_p3, R.id.left_p4, R.id.left_p5, R.id.left_p6, R.id.left_p7, R.id.left_p8};
 
         setMarkers( view, rightLeg, rightMarkers );
@@ -134,6 +134,7 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
         RequestLogObj logObj = new RequestLogObj( leftLegValues, rightLegValues, this.patientName, this.patientEmail );
         FootTempLoggerTask loggerTask = new FootTempLoggerTask( getActivity().getString( R.string.web_url) , this );
         loggerTask.executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, logObj );
+        FileWriter.getInstance().write(leftLegValues,rightLegValues,this.patientName);
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver()
