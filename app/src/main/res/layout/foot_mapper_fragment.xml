@@ -204,6 +204,6 @@
         android:id="@+id/upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Persist Values" />
+        android:text="Save Values" />
 
 </LinearLayout>
