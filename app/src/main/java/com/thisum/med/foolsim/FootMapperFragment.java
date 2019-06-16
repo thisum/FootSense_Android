@@ -158,7 +158,7 @@ public class FootMapperFragment extends Fragment implements View.OnClickListener
 		FootTempLoggerTask loggerTask = new FootTempLoggerTask(getActivity().getString(R.string.web_url), this);
 		loggerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, logObj);
 		FileWriter.getInstance().write(leftLegValues, rightLegValues, this.patientName);
-		Toast.makeText(getActivity(), "Data saved to /documents/foot-sense/", Toast.LENGTH_SHORT);
+		Toast.makeText(getActivity(), "Data saved to /documents/foot-sense/", Toast.LENGTH_SHORT).show();
 	}
 
 	private void extractAndShowValues(ArrayList<Integer> tempValues, boolean isRightLeg) {
